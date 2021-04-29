@@ -52,6 +52,8 @@ static THD_FUNCTION(PiRegulator, arg) {
     int16_t speed = 0;
     int16_t speed_correction = 0;
 
+    int16_t avancer_speed = 0;
+
     while(1){
         time = chVTGetSystemTime();
         
@@ -61,14 +63,32 @@ static THD_FUNCTION(PiRegulator, arg) {
         //computes a correction factor to let the robot rotate to be in front of the line
         speed_correction = (get_line_position() - (IMAGE_BUFFER_SIZE/2));
 
+
+        if((get_line_position() > 280) && (get_line_position() < 360))
+        {
+        	avancer_speed = 100;
+        }
+        else
+        {
+        	avancer_speed = 0;
+        }
+
+
         //if the line is nearly in front of the camera, don't rotate
         if(abs(speed_correction) < ROTATION_THRESHOLD){
         	speed_correction = 0;
         }
 
+       // right_motor_set_speed(avancer_speed);
+       // left_motor_set_speed(avancer_speed);
+
+        right_motor_set_speed(avancer_speed -(ROTATION_COEFF * speed_correction));
+        left_motor_set_speed(avancer_speed + (ROTATION_COEFF * speed_correction));
+
+
         //applies the speed from the PI regulator and the correction for the rotation
-		right_motor_set_speed(speed - ROTATION_COEFF * speed_correction);
-		left_motor_set_speed(speed + ROTATION_COEFF * speed_correction);
+		//right_motor_set_speed(avancer_speed - ROTATION_COEFF * speed_correction);
+		//left_motor_set_speed(avancer_speed + ROTATION_COEFF * speed_correction);
 
         //100Hz
         chThdSleepUntilWindowed(time, time + MS2ST(10));
