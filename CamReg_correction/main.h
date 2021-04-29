@@ -23,6 +23,12 @@ extern "C" {
 #define KP						800.0f
 #define KI 						3.5f	//must not be zero
 #define MAX_SUM_ERROR 			(MOTOR_SPEED_LIMIT/KI)
+#define NB_OF_BODYLEDS			8
+#define STATUS_IDLE				0
+#define STATUS_SEARCH			1
+#define STATUS_FETCH			2
+#define STATUS_TRANS			3
+#define STATUS_ARRIV			4
 
 /** Robot wide IPC bus. */
 extern messagebus_t bus;
