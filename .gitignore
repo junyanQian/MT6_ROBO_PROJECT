@@ -1,4 +1,5 @@
 build
+.settings
 
 # Prerequisites
 *.d
@@ -52,5 +53,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-CamReg_correction/libssp.a
-CamReg_correction/libssp_nonshared.a
