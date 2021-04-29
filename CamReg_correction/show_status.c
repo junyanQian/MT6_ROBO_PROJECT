@@ -38,7 +38,7 @@ void show_status(void){
 			led[i] = 0;
 		}
 	}else if (status == STATUS_TRANS){
-		//leds rotate, clockwise, periode = 1s
+		//leds rotate, clockwise, periode =1s
 		//initiated in main when changing the status to trans
 		for (int i = 0; i < NB_OF_BODYLEDS; i++){
 			if (led[i] == 1 && i != NB_OF_BODYLEDS-1){
@@ -89,8 +89,8 @@ static THD_FUNCTION(ShowStatus, arg) {
         time = chVTGetSystemTime();
         show_status();
 
-        //2Hz
-        chThdSleepUntilWindowed(time, time + MS2ST(500));
+        //8Hz
+        chThdSleepUntilWindowed(time, time + MS2ST(125));
     }
 }
 void show_status_start(void){
