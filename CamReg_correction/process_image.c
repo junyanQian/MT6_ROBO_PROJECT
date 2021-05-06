@@ -8,6 +8,8 @@
 
 #include <process_image.h>
 
+#include <motors.h> //les includes que j'ai rajout¨¦ commencent ici
+
 
 static float distance_cm = 0;
 static uint16_t line_position = IMAGE_BUFFER_SIZE/2;	//middle

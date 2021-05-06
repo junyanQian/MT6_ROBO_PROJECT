@@ -8,6 +8,7 @@ extern "C" {
 #include "camera/dcmi_camera.h"
 #include "msgbus/messagebus.h"
 #include "parameter/parameter.h"
+#include <sensors/VL53L0X/VL53L0X.h>
 
 
 //constants for the differents parts of the project
@@ -15,7 +16,7 @@ extern "C" {
 #define WIDTH_SLOPE				5
 #define MIN_LINE_WIDTH			40
 #define ROTATION_THRESHOLD		10
-#define ROTATION_COEFF			2 
+#define ROTATION_COEFF			0.5
 #define PXTOCM					1570.0f //experimental value
 #define GOAL_DISTANCE 			10.0f
 #define MAX_DISTANCE 			25.0f
@@ -23,12 +24,7 @@ extern "C" {
 #define KP						800.0f
 #define KI 						3.5f	//must not be zero
 #define MAX_SUM_ERROR 			(MOTOR_SPEED_LIMIT/KI)
-#define NB_OF_BODYLEDS			8
-#define STATUS_IDLE				0
-#define STATUS_SEARCH			1
-#define STATUS_FETCH			2
-#define STATUS_TRANS			3
-#define STATUS_ARRIV			4
+#define PROXI_POS_REACH         500
 
 /** Robot wide IPC bus. */
 extern messagebus_t bus;

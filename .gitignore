@@ -1,4 +1,7 @@
 build
+.settings
+.xml
+Scripts_python
 
 # Prerequisites
 *.d
