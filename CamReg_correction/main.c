@@ -12,8 +12,11 @@
 #include <camera/po8030.h>
 #include <chprintf.h>
 
+
 #include <pi_regulator.h>
 #include <process_image.h>
+
+
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -48,6 +51,8 @@ int main(void)
     //starts the camera
     dcmi_start();
 	po8030_start();
+	//time of flight starts
+	VL53L0X_start();
 	//inits the motors
 	motors_init();
 

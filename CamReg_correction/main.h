@@ -8,6 +8,7 @@ extern "C" {
 #include "camera/dcmi_camera.h"
 #include "msgbus/messagebus.h"
 #include "parameter/parameter.h"
+#include <sensors/VL53L0X/VL53L0X.h>
 
 
 //constants for the differents parts of the project
@@ -23,6 +24,7 @@ extern "C" {
 #define KP						800.0f
 #define KI 						3.5f	//must not be zero
 #define MAX_SUM_ERROR 			(MOTOR_SPEED_LIMIT/KI)
+#define PROXI_POS_REACH         500
 
 /** Robot wide IPC bus. */
 extern messagebus_t bus;
