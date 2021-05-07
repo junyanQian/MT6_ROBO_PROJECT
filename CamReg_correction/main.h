@@ -24,7 +24,12 @@ extern "C" {
 #define KP						800.0f
 #define KI 						3.5f	//must not be zero
 #define MAX_SUM_ERROR 			(MOTOR_SPEED_LIMIT/KI)
-#define PROXI_POS_REACH         500
+#define PROXI_POS_REACH         1500
+#define STATUS_IDLE				0
+#define STATUS_SEARCH			1
+#define STATUS_FETCH			2
+#define STATUS_TRANS			3
+#define STATUS_ARRIV			4
 
 /** Robot wide IPC bus. */
 extern messagebus_t bus;
@@ -32,6 +37,10 @@ extern messagebus_t bus;
 extern parameter_namespace_t parameter_root;
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size);
+
+void set_status(void);
+uint8_t get_status(void);
+void set_status_idle(void);
 
 #ifdef __cplusplus
 }

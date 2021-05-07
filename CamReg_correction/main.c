@@ -10,13 +10,14 @@
 #include <main.h>
 #include <motors.h>
 #include <camera/po8030.h>
+#include <sensors/VL53L0X/VL53L0X.h>
 #include <chprintf.h>
 
 
 #include <pi_regulator.h>
 #include <process_image.h>
 
-
+static uint8_t main_status = STATUS_IDLE;
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -35,6 +36,19 @@ static void serial_start(void)
 	};
 
 	sdStart(&SD3, &ser_cfg); // UART3.
+}
+
+void set_status(void){
+	if(main_status < STATUS_ARRIV) main_status++ ;
+	else main_status = STATUS_IDLE;
+}
+
+void set_status_idle(void){
+	main_status = STATUS_IDLE;
+}
+
+uint8_t get_status(void){
+	return main_status;
 }
 
 int main(void)
@@ -63,6 +77,9 @@ int main(void)
     /* Infinite loop. */
     while (1) {
     	//waits 1 second
+    	if(main_status == STATUS_IDLE) set_status();
+    	//chprintf((BaseSequentialStream *)&SDU1, "distance_obj = %f\n", VL53L0X_get_dist_mm());
+    	chprintf((BaseSequentialStream *)&SDU1, "main_status = %d\n", main_status);
         chThdSleepMilliseconds(1000);
     }
 }
