@@ -8,11 +8,9 @@
 
 #include <process_image.h>
 
-#include <motors.h> //les includes que j'ai rajout¨¦ commencent ici
-
-
+BSEMAPHORE_DECL(image_process_ready_sem, TRUE);
 static float distance_cm = 0;
-static uint16_t line_position = IMAGE_BUFFER_SIZE/2;	//middle
+static uint16_t line_position = 0;	//middle
 
 //semaphore
 static BSEMAPHORE_DECL(image_ready_sem, TRUE);
@@ -163,6 +161,8 @@ static THD_FUNCTION(ProcessImage, arg) {
 		}
 		//invert the bool
 		send_to_computer = !send_to_computer;
+		chBSemSignal(&image_process_ready_sem);
+		chThdSleepMilliseconds(100);
     }
 }
 
@@ -175,6 +175,6 @@ uint16_t get_line_position(void){
 }
 
 void process_image_start(void){
-	chThdCreateStatic(waProcessImage, sizeof(waProcessImage), NORMALPRIO, ProcessImage, NULL);
-	chThdCreateStatic(waCaptureImage, sizeof(waCaptureImage), NORMALPRIO, CaptureImage, NULL);
+	chThdCreateStatic(waProcessImage, sizeof(waProcessImage), NORMALPRIO+1, ProcessImage, NULL);
+	chThdCreateStatic(waCaptureImage, sizeof(waCaptureImage), NORMALPRIO+1, CaptureImage, NULL);
 }
